@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public final class App {
 
-    private static final double JENKINS_PROBABILITY = 0.45;
-    private static final int JENKINS_DEGREES_OF_FREEDOM = 15;
+    private static final double JENKINS_PROBABILITY = 0.495;
+    private static final int JENKINS_DEGREES_OF_FREEDOM = 4;
 
     private App() {
     }

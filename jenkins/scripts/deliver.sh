@@ -2,5 +2,5 @@
 
 set -euo pipefail
 
-echo 'Calculating with the p and dof configured in App.java.'
+echo 'Resultado.'
 java -jar target/my-app-1.0-SNAPSHOT.jar --jenkins
