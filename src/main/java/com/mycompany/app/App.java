@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public final class App {
 
-    // Edit these inputs before committing and pushing to run a different Jenkins calculation.
     private static final double JENKINS_PROBABILITY = 0.20;
     private static final int JENKINS_DEGREES_OF_FREEDOM = 6;
 
