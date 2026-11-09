@@ -1,3 +1,4 @@
+package com.mycompany.app;
 
 
 /** Finds the upper limit x whose Student t integral from 0 to x is p. */
