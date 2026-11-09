@@ -5,11 +5,9 @@ import java.util.Scanner;
 
 public final class App {
 
-    private static final TestCase[] REQUIRED_CASES = {
-        new TestCase(0.20, 6, 0.55338),
-        new TestCase(0.45, 15, 1.75305),
-        new TestCase(0.495, 4, 4.60409)
-    };
+    // Edit these inputs before committing and pushing to run a different Jenkins calculation.
+    private static final double JENKINS_PROBABILITY = 0.20;
+    private static final int JENKINS_DEGREES_OF_FREEDOM = 6;
 
     private App() {
     }
@@ -20,23 +18,8 @@ public final class App {
             runInteractive();
             return;
         }
-        if (args.length == 1 && "--table".equals(args[0])) {
-            printRequiredCases();
-            return;
-        }
-        if (args.length == 2 && "--case".equals(args[0])) {
-            try {
-                int caseNumber = Integer.parseInt(args[1]);
-                printRequiredCase(caseNumber);
-            } catch (NumberFormatException exception) {
-                System.err.println("El número de caso debe ser 1, 2 o 3.");
-                printUsage();
-                System.exit(2);
-            } catch (IllegalArgumentException exception) {
-                System.err.println(exception.getMessage());
-                printUsage();
-                System.exit(2);
-            }
+        if (args.length == 1 && "--jenkins".equals(args[0])) {
+            printJenkinsResult();
             return;
         }
         if (args.length != 2) {
@@ -60,24 +43,10 @@ public final class App {
         }
     }
 
-    private static void printRequiredCases() {
-        System.out.println("p\tdof\tx esperado\tx calculado");
-        for (TestCase testCase : REQUIRED_CASES) {
-            double x = StudentTSearch.findX(testCase.probability, testCase.degreesOfFreedom);
-            System.out.printf("%.3f\t%d\t%.5f\t%.5f%n",
-                    testCase.probability, testCase.degreesOfFreedom, testCase.expectedX, x);
-        }
-    }
-
-    private static void printRequiredCase(int caseNumber) {
-        if (caseNumber < 1 || caseNumber > REQUIRED_CASES.length) {
-            throw new IllegalArgumentException("El número de caso debe ser 1, 2 o 3.");
-        }
-
-        TestCase testCase = REQUIRED_CASES[caseNumber - 1];
-        double x = StudentTSearch.findX(testCase.probability, testCase.degreesOfFreedom);
-        System.out.printf(Locale.US, "Caso %d: p=%.3f, dof=%d, x esperado=%.5f, x calculado=%.5f%n",
-                caseNumber, testCase.probability, testCase.degreesOfFreedom, testCase.expectedX, x);
+    private static void printJenkinsResult() {
+        double x = StudentTSearch.findX(JENKINS_PROBABILITY, JENKINS_DEGREES_OF_FREEDOM);
+        System.out.printf(Locale.US, "p=%.3f, dof=%d, x=%.5f%n",
+                JENKINS_PROBABILITY, JENKINS_DEGREES_OF_FREEDOM, x);
     }
 
     private static void runInteractive() {
@@ -111,21 +80,8 @@ public final class App {
 
     private static void printUsage() {
         System.err.println("Uso: java -jar my-app-1.0-SNAPSHOT.jar <p> <dof>");
-        System.err.println("      java -jar my-app-1.0-SNAPSHOT.jar --case <1|2|3>");
-        System.err.println("      java -jar my-app-1.0-SNAPSHOT.jar --table");
+        System.err.println("      java -jar my-app-1.0-SNAPSHOT.jar --jenkins");
         System.err.println("      Sin argumentos, el programa solicita p y dof.");
         System.err.println("      p debe cumplir 0 <= p < 0.5 y dof debe ser positivo.");
-    }
-
-    private static final class TestCase {
-        private final double probability;
-        private final int degreesOfFreedom;
-        private final double expectedX;
-
-        private TestCase(double probability, int degreesOfFreedom, double expectedX) {
-            this.probability = probability;
-            this.degreesOfFreedom = degreesOfFreedom;
-            this.expectedX = expectedX;
-        }
     }
 }

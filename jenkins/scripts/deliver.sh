@@ -2,7 +2,5 @@
 
 set -euo pipefail
 
-CASE_TO_RUN=1
-
-echo "Running required case ${CASE_TO_RUN} from the Maven-built application."
-java -jar target/my-app-1.0-SNAPSHOT.jar --case "${CASE_TO_RUN}"
+echo 'Calculating with the p and dof configured in App.java.'
+java -jar target/my-app-1.0-SNAPSHOT.jar --jenkins
