@@ -1,10 +1,8 @@
 package com.mycompany.app;
 
 
-/** Finds the upper limit x whose Student t integral from 0 to x is p. */
 public final class StudentTSearch {
 
-    /** The assignment permits an error of 0.00001; this tighter limit improves x precision. */
     public static final double PROBABILITY_TOLERANCE = 1.0e-10;
 
     private static final int SIMPSON_INTERVALS = 10_000;
@@ -14,7 +12,7 @@ public final class StudentTSearch {
     }
 
     /**
-     * Finds x with the step-adjustment search described in the Program 6 assignment.
+     * 
      *
      * @param probability desired integral, in the range [0, 0.5)
      * @param degreesOfFreedom positive degrees of freedom
